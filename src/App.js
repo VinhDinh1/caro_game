@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { calculateWinnerAdvancced } from "../calc/calculate";
+import { calculateWinnerAdvancced } from "./components/calc/calculate";
+import Board from "./components/Board/Board";
+// import Message from "./Message";
+import classes from "./App.css";
+import RangeBar from "./components/RangeBar";
+import { Button } from "antd";
 
 const initialState = {
   history: [
@@ -13,8 +18,8 @@ const initialState = {
   xIsNext: true,
 };
 
-const sortMoves = (moves: any, ascending: any) => {
-  return moves.sort((moveA: any, moveB: any) => {
+const sortMoves = (moves, ascending) => {
+  return moves.sort((moveA, moveB) => {
     if (ascending) {
       return moveA.step > moveB.step ? 1 : -1;
     } else {
@@ -23,11 +28,11 @@ const sortMoves = (moves: any, ascending: any) => {
   });
 };
 
-const checkFullStep = (currentBoard: any) => {
+const checkFullStep = (currentBoard) => {
   return !currentBoard.includes(null);
 };
 
-const Game = (props:any) => {
+const App = (props) => {
   const [game, setGame] = useState(initialState);
 
   const [showMessgae, setShowMessage] = useState(true);
@@ -35,6 +40,7 @@ const Game = (props:any) => {
   const [size, setSize] = useState(5);
 
   const history = game.history;
+
   const current = history[game.stepNumber];
 
   const newGame = () => {
@@ -42,12 +48,12 @@ const Game = (props:any) => {
     setShowMessage(true);
   };
 
-  const onChangeSizeHandler = (value:any) => {
+  const onChangeSizeHandler = (value) => {
     setSize(value);
     newGame();
   };
 
-  const jumpTo = (step:any) => {
+  const jumpTo = (step) => {
     setGame({
       ...game,
       stepNumber: step,
@@ -56,17 +62,13 @@ const Game = (props:any) => {
     setShowMessage(true);
   };
 
-  const closeMessgaeHandler = () => {
-    setShowMessage(false);
-  };
+  // const closeMessgaeHandler = () => {
+  //   setShowMessage(false);
+  // };
 
-  const sortHandler = () => {
-    setGame({ ...game, isAsc: !game.isAsc });
-  };
-
-  const handleClick = (i:any) => {
+  const handleClick = (i) => {
     const squares = current.squares.slice();
-    if (calculateWinnerAdvancced(squares,squares.length) || squares[i]) {
+    if (calculateWinnerAdvancced(squares) || squares[i]) {
       return;
     }
 
@@ -93,27 +95,28 @@ const Game = (props:any) => {
   let message;
   if (winner) {
     status = "Winner is " + winner.winner;
-    message = (
-      <Message
-        message={status}
-        win={true}
-        newGame={newGame}
-        onClose={closeMessgaeHandler}
-      />
-    );
+    // message = (
+    //   <Message
+    //     message={status}
+    //     win={true}
+    //     newGame={newGame}
+    //     onClose={closeMessgaeHandler}
+    //   />
+    // );
   } else {
     status = "Next player: " + (game.xIsNext ? "X" : "O");
   }
 
   if (isEnd && !winner) {
-    message = (
-      <Message
-        message={`Oh It's a draw`}
-        win={false}
-        newGame={newGame}
-        onClose={closeMessgaeHandler}
-      />
-    );
+    status = "Oh It's a draw"
+    // message = (
+    //   <Message
+    //     message={`Oh It's a draw`}
+    //     win={false}
+    //     newGame={newGame}
+    //     onClose={closeMessgaeHandler}
+    //   />
+    // );
   }
 
   let listMoves = [];
@@ -134,7 +137,6 @@ const Game = (props:any) => {
   });
 
   const sortedMoves = sortMoves(listMoves, game.isAsc);
-
   const moves_tmp = sortedMoves.map((move, step) => {
     const desc =
       step !== null
@@ -144,9 +146,9 @@ const Game = (props:any) => {
         : "Go to game start";
     return (
       <li key={step}>
-        <button className={classes.move} onClick={() => jumpTo(step)}>
+        <Button onClick={() => jumpTo(step)}>
           {desc}
-        </button>
+        </Button>
       </li>
     );
   });
@@ -168,7 +170,7 @@ const Game = (props:any) => {
         </div>
         <div className="game-info">
           <h1>{status}</h1>
-          <ToggleButton onClick={sortHandler} isAsc={game.isAsc} />
+          <Button onClick={newGame}> Bắt đầu lại</Button>
           <ol>{moves_tmp}</ol>
         </div>
         {showMessgae && message}
@@ -176,3 +178,5 @@ const Game = (props:any) => {
     </div>
   );
 };
+
+export default App;

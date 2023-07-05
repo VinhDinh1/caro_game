@@ -1,4 +1,4 @@
-export function calculateWinner(squares :any) {
+export function calculateWinner(squares) {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
@@ -18,7 +18,7 @@ export function calculateWinner(squares :any) {
     return null;
 };
 
-export function calculateWinnerAdvancced(squares:any, gameSize:any) {
+export function calculateWinnerAdvancced(squares, gameSize) {
 
     let winPath = Array(5);//track of the square that show winner's path
 
@@ -72,3 +72,4 @@ export function calculateWinnerAdvancced(squares:any, gameSize:any) {
 
     return null;
 }
+

@@ -1,16 +1,5 @@
-import React from "react";
-
-function Square({
-  value,
-  isWin,
-  onClick,
-  selectedSquare,
-}: {
-  value: any;
-  isWin: any;
-  onClick: any;
-  selectedSquare: any;
-}) {
+function Square(props) {
+  const { value, isWin, onClick, selectedSquare } = props;
   let status = "";
 
   if (selectedSquare) {
