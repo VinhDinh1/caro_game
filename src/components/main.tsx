@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { calculateWinnerAdvancced } from "./components/calc/calculate";
-import Board from "./components/Board/Board";
-// import Message from "./Message";
-import classes from "./App.css";
-import RangeBar from "./components/RangeBar";
-import { Button } from "antd";
+import RangeBar from "./range-bar/range-bar";
+import Board from "./board/board";
+import { calculateWinnerAdvanced } from "../calc/calculate";
+import styled from "styled-components";
+
+const Mybutton = styled.button`
+  width: 120px;
+  height: 30px;
+  margin-bottom: 0.5rem;
+  background-color: #d8977e;
+  border-radius: 10px;
+`;
 
 const initialState = {
   history: [
@@ -18,8 +24,8 @@ const initialState = {
   xIsNext: true,
 };
 
-const sortMoves = (moves, ascending) => {
-  return moves.sort((moveA, moveB) => {
+const sortMoves = (moves: any, ascending: any) => {
+  return moves.sort((moveA: any, moveB: any) => {
     if (ascending) {
       return moveA.step > moveB.step ? 1 : -1;
     } else {
@@ -28,14 +34,14 @@ const sortMoves = (moves, ascending) => {
   });
 };
 
-const checkFullStep = (currentBoard) => {
+const checkFullStep = (currentBoard: any) => {
   return !currentBoard.includes(null);
 };
 
-const App = (props) => {
+const Main = () => {
   const [game, setGame] = useState(initialState);
 
-  const [showMessgae, setShowMessage] = useState(true);
+  const [showMessage, setShowMessage] = useState(true);
 
   const [size, setSize] = useState(5);
 
@@ -48,12 +54,12 @@ const App = (props) => {
     setShowMessage(true);
   };
 
-  const onChangeSizeHandler = (value) => {
+  const onChangeSizeHandler = (value: any) => {
     setSize(value);
     newGame();
   };
 
-  const jumpTo = (step) => {
+  const jumpTo = (step: any) => {
     setGame({
       ...game,
       stepNumber: step,
@@ -62,13 +68,9 @@ const App = (props) => {
     setShowMessage(true);
   };
 
-  // const closeMessgaeHandler = () => {
-  //   setShowMessage(false);
-  // };
-
-  const handleClick = (i) => {
+  const handleClick = (i: any) => {
     const squares = current.squares.slice();
-    if (calculateWinnerAdvancced(squares) || squares[i]) {
+    if (calculateWinnerAdvanced(squares, size) || squares[i]) {
       return;
     }
 
@@ -89,39 +91,22 @@ const App = (props) => {
 
   const isEnd = checkFullStep(current.squares);
 
-  const winner = calculateWinnerAdvancced(current.squares, size);
-
+  const winner: any = calculateWinnerAdvanced(current.squares, size);
   let status;
   let message;
   if (winner) {
     status = "Winner is " + winner.winner;
-    // message = (
-    //   <Message
-    //     message={status}
-    //     win={true}
-    //     newGame={newGame}
-    //     onClose={closeMessgaeHandler}
-    //   />
-    // );
   } else {
     status = "Next player: " + (game.xIsNext ? "X" : "O");
   }
 
   if (isEnd && !winner) {
-    status = "Oh It's a draw"
-    // message = (
-    //   <Message
-    //     message={`Oh It's a draw`}
-    //     win={false}
-    //     newGame={newGame}
-    //     onClose={closeMessgaeHandler}
-    //   />
-    // );
+    status = "Oh It's a draw";
   }
 
-  let listMoves = [];
+  let listMoves: any[] = [];
 
-  history.map((step, move, history) => {
+  history.forEach((step, move, history) => {
     const current = history[move].squares;
     const pre = history[move > 0 ? move - 1 : 0].squares;
 
@@ -135,20 +120,17 @@ const App = (props) => {
       }
     }
   });
-
   const sortedMoves = sortMoves(listMoves, game.isAsc);
-  const moves_tmp = sortedMoves.map((move, step) => {
+  const moves_tmp = sortedMoves.map((move: any, step: any) => {
     const desc =
       step !== null
-        ? `${move.player} go to ( ${move.position % size}, ${parseInt(
+        ? `${move.player} go to ( ${move.position % size}, ${Math.round(
             move.position / size
           )})`
         : "Go to game start";
     return (
       <li key={step}>
-        <Button onClick={() => jumpTo(step)}>
-          {desc}
-        </Button>
+        <Mybutton onClick={() => jumpTo(step)}>{desc}</Mybutton>
       </li>
     );
   });
@@ -164,19 +146,18 @@ const App = (props) => {
             size={size}
             squares={current.squares}
             selectedSquare={game.currenPos}
-            onClick={(i) => handleClick(i)}
+            onClick={(i: any) => handleClick(i)}
             winPath={winner ? winner.path : null}
           />
         </div>
         <div className="game-info">
           <h1>{status}</h1>
-          <Button onClick={newGame}> Bắt đầu lại</Button>
+          <Mybutton onClick={newGame}> Bắt đầu lại</Mybutton>
           <ol>{moves_tmp}</ol>
         </div>
-        {showMessgae && message}
+        {showMessage && message}
       </div>
     </div>
   );
 };
-
-export default App;
+export default Main;
