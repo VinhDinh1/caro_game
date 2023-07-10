@@ -71,6 +71,5 @@ export function calculateWinnerAdvanced(squares: any, gameSize: any) {
       }
     }
   }
-
   return null;
 }
