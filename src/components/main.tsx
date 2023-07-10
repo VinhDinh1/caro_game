@@ -4,7 +4,7 @@ import Board from "./board/board";
 import { calculateWinnerAdvanced } from "../calc/calculate";
 import styled from "styled-components";
 
-const Mybutton = styled.button`
+const ButtonBase = styled.button`
   width: 120px;
   height: 30px;
   margin-bottom: 0.5rem;
@@ -130,7 +130,7 @@ const Main = () => {
         : "Go to game start";
     return (
       <li key={step}>
-        <Mybutton onClick={() => jumpTo(step)}>{desc}</Mybutton>
+        <ButtonBase onClick={() => jumpTo(step)}>{desc}</ButtonBase>
       </li>
     );
   });
@@ -152,7 +152,7 @@ const Main = () => {
         </div>
         <div className="game-info">
           <h1>{status}</h1>
-          <Mybutton onClick={newGame}> Bắt đầu lại</Mybutton>
+          <ButtonBase onClick={newGame}> Bắt đầu lại</ButtonBase>
           <ol>{moves_tmp}</ol>
         </div>
         {showMessage && message}
