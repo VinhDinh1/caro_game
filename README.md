@@ -8,5 +8,5 @@ Tên: Caro game
 Công nghệ: TypeScript,css
 
 **Ghi chú
-Bản cải tiến sau khi convert sang sử dụng ts
+Bản cải tiến sau cấu trúc lại các component
 
