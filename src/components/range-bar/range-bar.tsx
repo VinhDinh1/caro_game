@@ -43,8 +43,7 @@ const ThumbLabel = ({
 const RangeBar = ({ onChange }: { onChange: any }) => {
   const [value, setValue] = useState([5]);
 
-  const rangeRef:any = useRef<HTMLInputElement | null>(null);
-  console.log(rangeRef);
+  const rangeRef: any = useRef<HTMLInputElement | null>(null);
   return (
     <div
       style={{
@@ -53,7 +52,7 @@ const RangeBar = ({ onChange }: { onChange: any }) => {
         flexWrap: "wrap",
       }}
     >
-      <Range 
+      <Range
         ref={rangeRef}
         allowOverlap
         step={STEP}

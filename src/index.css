@@ -76,6 +76,7 @@ ul {
 }
 
 .game-info {
+  margin-right: 5em;
 }
 
 .title-game{
@@ -92,5 +93,5 @@ ul {
 }
 
 .game-board{
-  margin-left: 100px;
+  margin-left: 50px;
 }

@@ -1,0 +1,13 @@
+{
+  "gamePlay": {
+    "title": "Caro Game",
+    "restart": "Bắt đầu lại",
+    "winner": " Chiến thắng",
+    "draw": "Hòa nhau",
+    "nextPlayer": "Người chơi: "
+  },
+  "modal": {
+    "restart": "Bắt đầu lại",
+    "close": "Đóng"
+  }
+}
